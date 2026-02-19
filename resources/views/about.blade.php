@@ -1,3 +1,3 @@
 <x-layout title="Over Ons">
-    <h1>About</h1>
+    <h1>Over Ons</h1>
 </x-layout>

@@ -11,8 +11,8 @@
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
+        <a href="/">Thuis</a>
+        <a href="/about">Over Ons</a>
         <a href="/contact">Contact</a>
     </nav>
     {{ $slot }}
