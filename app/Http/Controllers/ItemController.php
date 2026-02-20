@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Models\Category;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -13,7 +14,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        $items = Item::with('category')->get();
         return view('items.index', compact('items'));
     }
 
@@ -22,7 +23,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('items.create');
+        $categories = Category::all();
+        return view('items.create', compact('categories'));
     }
 
     /**
@@ -31,10 +33,7 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         $validated = $request->validated();
-        $item = new Item();
-        $item->name = $validated['name'];
-        $item->description = $validated['description'];
-        $item->save();
+        Item::create($validated);
         return redirect()->route('items.index');
     }
 
@@ -51,7 +50,8 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        return view('items.edit', compact('item'));
+        $categories = Category::all();
+        return view('items.edit', compact('item', 'categories'));
     }
 
     /**
@@ -60,9 +60,7 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request, Item $item)
     {
         $validated = $request->validated();
-        $item->name = $validated['name'];
-        $item->description = $validated['description'];
-        $item->save();
+        $item->update($validated);
         return redirect()->route('items.index');
     }
 
