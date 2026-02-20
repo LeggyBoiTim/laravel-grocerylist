@@ -29,9 +29,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validated();
         $item = new Item();
-        $item->name = $request->input('name');
-        $item->description = $request->input('description');
+        $item->name = $validated['name'];
+        $item->description = $validated['description'];
         $item->save();
         return redirect()->route('items.index');
     }
@@ -57,8 +58,9 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $item->name = $request->input('name');
-        $item->description = $request->input('description');
+        $validated = $request->validated();
+        $item->name = $validated['name'];
+        $item->description = $validated['description'];
         $item->save();
         return redirect()->route('items.index');
     }
